@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>刘节琦 - 个人作品集</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --primary: #00d9ff; --secondary: #00ff88; --dark-bg: #0a0a1a; }
+        body { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3e 50%, #0f0f2d 100%); min-height: 100vh; color: #fff; overflow-x: hidden; }
+        
+        /* 粒子背景 */
+        .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
+        .particle { position: absolute; width: 4px; height: 4px; border-radius: 50%; opacity: 0.4; animation: float 15s infinite; box-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary); }
+        @keyframes float { 0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.6; } 90% { opacity: 0.6; } 100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; } }
+        
+        /* 网格背景 */
+        .grid-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: linear-gradient(rgba(0, 217, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 217, 255, 0.03) 1px, transparent 1px); background-size: 50px 50px; pointer-events: none; z-index: 0; }
+        
+        nav { position: fixed; top: 0; width: 100%; background: rgba(10, 10, 26, 0.9); padding: 20px 50px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0, 217, 255, 0.1); }
+        .logo { font-size: 28px; font-weight: bold; font-family: 'Orbitron', sans-serif; background: linear-gradient(45deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 3px; text-shadow: 0 0 30px rgba(0, 217, 255, 0.5); }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 15px; transition: all 0.3s ease; position: relative; padding: 8px 0; letter-spacing: 1px; }
+        .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: linear-gradient(90deg, var(--primary), var(--secondary)); transition: width 0.3s ease; }
+        .nav-links a:hover { color: var(--primary); text-shadow: 0 0 20px var(--primary); }
+        .nav-links a:hover::after { width: 100%; }
+        
+        header { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 120px 50px 80px; position: relative; z-index: 1; }
+        .header-content { display: flex; align-items: center; gap: 100px; max-width: 1200px; z-index: 1; }
+        
+        .profile-image { width: 380px; height: 450px; border-radius: 30px; overflow: hidden; box-shadow: 0 20px 60px rgba(0, 217, 255, 0.3), 0 0 100px rgba(0, 217, 255, 0.1), inset 0 0 60px rgba(0, 217, 255, 0.1); border: 2px solid rgba(0, 217, 255, 0.3); background: rgba(0, 217, 255, 0.05); position: relative; cursor: pointer; transition: all 0.5s ease; }
+        .profile-image::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent 30%, rgba(0, 217, 255, 0.1) 50%, transparent 70%); animation: shine 4s infinite; z-index: 2; pointer-events: none; }
+        @keyframes shine { 0% { transform: translateX(-100%) rotate(45deg); } 100% { transform: translateX(100%) rotate(45deg); } }
+        .profile-image:hover { transform: scale(1.03) translateY(-10px); box-shadow: 0 30px 80px rgba(0, 217, 255, 0.4), 0 0 120px rgba(0, 217, 255, 0.2); border-color: var(--primary); }
+        .profile-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .profile-image:hover img { transform: scale(1.1); }
+        .profile-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 100px; }
+        
+        .header-text h1 { font-size: 64px; margin-bottom: 20px; background: linear-gradient(45deg, #fff, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-family: 'Orbitron', sans-serif; letter-spacing: 4px; animation: glow 3s ease-in-out infinite alternate; }
+        @keyframes glow { from { filter: drop-shadow(0 0 10px rgba(0, 217, 255, 0.5)); } to { filter: drop-shadow(0 0 30px rgba(0, 255, 136, 0.5)); } }
+        .header-text .subtitle { font-size: 26px; color: var(--primary); margin-bottom: 25px; font-weight: 300; letter-spacing: 3px; position: relative; display: inline-block; }
+        .header-text .subtitle::before, .header-text .subtitle::after { content: ''; position: absolute; top: 50%; width: 40px; height: 1px; }
+        .header-text .subtitle::before { right: calc(100% + 20px); background: linear-gradient(90deg, transparent, var(--primary)); }
+        .header-text .subtitle::after { left: calc(100% + 20px); background: linear-gradient(90deg, var(--secondary), transparent); }
+        .header-text > p { color: rgba(255,255,255,0.7); line-height: 1.9; max-width: 550px; font-size: 16px; margin-bottom: 30px; }
+        
+        .contact-info { display: flex; flex-direction: column; gap: 18px; }
+        .contact-item { display: flex; align-items: center; gap: 18px; font-size: 15px; color: rgba(255, 255, 255, 0.8); padding: 15px 25px; background: rgba(255, 255, 255, 0.03); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.3s ease; }
+        .contact-item:hover { background: rgba(0, 217, 255, 0.1); border-color: rgba(0, 217, 255, 0.3); transform: translateX(10px); }
+        .contact-item .icon { width: 45px; height: 45px; background: linear-gradient(135deg, rgba(0, 217, 255, 0.2), rgba(0, 255, 136, 0.1)); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 20px; transition: all 0.3s ease; }
+        .contact-item:hover .icon { transform: scale(1.1) rotate(5deg); box-shadow: 0 0 20px rgba(0, 217, 255, 0.4); }
+        
+        .skills-section { padding: 100px 50px; max-width: 1400px; margin: 0 auto; position: relative; z-index: 1; }
+        .section-title { text-align: center; font-size: 48px; margin-bottom: 70px; position: relative; font-family: 'Orbitron', sans-serif; letter-spacing: 5px; }
+        .section-title span { background: linear-gradient(45deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .section-title::after { content: ''; position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); width: 120px; height: 4px; background: linear-gradient(45deg, var(--primary), var(--secondary)); border-radius: 2px; box-shadow: 0 0 20px var(--primary); }
+        
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 30px; }
+        .skill-card { background: rgba(255, 255, 255, 0.03); border-radius: 25px; padding: 35px; border: 1px solid rgba(0, 217, 255, 0.15); transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
+        .skill-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: linear-gradient(90deg, var(--primary), var(--secondary)); transform: scaleX(0); transform-origin: left; transition: transform 0.5s ease; }
+        .skill-card::after { content: ''; position: absolute; top: 0; right: 0; width: 100px; height: 100px; background: radial-gradient(circle, rgba(0, 217, 255, 0.1) 0%, transparent 70%); opacity: 0; transition: opacity 0.5s ease; }
+        .skill-card:hover { transform: translateY(-15px); background: rgba(255, 255, 255, 0.06); box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3), 0 0 30px rgba(0, 217, 255, 0.15); border-color: rgba(0, 217, 255, 0.3); }
+        .skill-card:hover::before { transform: scaleX(1); }
+        .skill-card:hover::after { opacity: 1; }
+        
+        .skill-image { width: 100%; height: 180px; border-radius: 18px; overflow: hidden; margin-bottom: 25px; background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(0, 255, 136, 0.05)); display: flex; align-items: center; justify-content: center; font-size: 55px; cursor: pointer; position: relative; transition: all 0.4s ease; border: 1px solid rgba(0, 217, 255, 0.2); }
+        .skill-image::before { content: '🔍 点击查看大图'; position: absolute; bottom: 10px; right: 10px; background: rgba(0, 0, 0, 0.7); color: #fff; padding: 5px 12px; border-radius: 20px; font-size: 12px; opacity: 0; transition: opacity 0.3s ease; z-index: 10; }
+        .skill-image:hover::before { opacity: 1; }
+        .skill-image:hover { transform: scale(1.02); box-shadow: 0 10px 30px rgba(0, 217, 255, 0.3); border-color: var(--primary); }
+        .skill-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .skill-card:hover .skill-image img { transform: scale(1.15); }
+        
+        .skill-card h3 { font-size: 22px; margin-bottom: 15px; color: var(--primary); font-family: 'Orbitron', sans-serif; letter-spacing: 2px; }
+        .skill-card p { color: rgba(255, 255, 255, 0.7); line-height: 1.8; font-size: 14px; }
+        .skill-tag { display: inline-block; background: linear-gradient(135deg, rgba(0, 255, 136, 0.15), rgba(0, 217, 255, 0.1)); color: var(--secondary); padding: 6px 16px; border-radius: 25px; font-size: 12px; margin-top: 18px; margin-right: 8px; border: 1px solid rgba(0, 255, 136, 0.3); transition: all 0.3s ease; cursor: default; }
+        .skill-tag:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3); background: linear-gradient(135deg, rgba(0, 255, 136, 0.25), rgba(0, 217, 255, 0.15)); }
+        
+        footer { text-align: center; padding: 50px; background: rgba(5, 5, 20, 0.9); border-top: 1px solid rgba(0, 217, 255, 0.1); position: relative; z-index: 1; }
+        footer p { color: rgba(255, 255, 255, 0.6); font-size: 14px; letter-spacing: 1px; }
+        
+        /* 灯箱模态框 */
+        .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); z-index: 10000; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; }
+        .lightbox.active { display: flex; opacity: 1; }
+        .lightbox img { max-width: 90%; max-height: 90%; border-radius: 15px; box-shadow: 0 0 100px rgba(0, 217, 255, 0.3); transform: scale(0.9); transition: transform 0.3s ease; }
+        .lightbox.active img { transform: scale(1); }
+        .lightbox-close { position: absolute; top: 40px; right: 40px; font-size: 50px; color: #fff; cursor: pointer; transition: all 0.3s ease; line-height: 1; }
+        .lightbox-close:hover { color: var(--primary); transform: rotate(90deg); }
+        .lightbox-caption { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); color: rgba(255, 255, 255, 0.8); font-size: 18px; letter-spacing: 2px; }
+        
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        .header-content { animation: fadeInUp 1s ease forwards; }
+        .skill-card { opacity: 0; animation: fadeInUp 0.6s ease forwards; }
+        .skill-card:nth-child(1) { animation-delay: 0.1s; }
+        .skill-card:nth-child(2) { animation-delay: 0.2s; }
+        .skill-card:nth-child(3) { animation-delay: 0.3s; }
+        .skill-card:nth-child(4) { animation-delay: 0.4s; }
+        .skill-card:nth-child(5) { animation-delay: 0.5s; }
+        .skill-card:nth-child(6) { animation-delay: 0.6s; }
+        
+        @media (max-width: 1000px) { .header-content { flex-direction: column; text-align: center; gap: 50px; } .profile-image { width: 300px; height: 360px; } .header-text h1 { font-size: 42px; } .contact-info { align-items: center; } .header-text .subtitle::before, .header-text .subtitle::after { display: none; } }
+        @media (max-width: 600px) { nav { padding: 15px 20px; } .logo { font-size: 20px; } .nav-links { gap: 15px; } .nav-links a { font-size: 13px; } .skills-section { padding: 60px 20px; } .section-title { font-size: 32px; } }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+    <div class="particles" id="particles"></div>
+
+    <nav>
+        <div class="logo">LIUJIEQI</div>
+        <div class="nav-links"><a href="#home">首页</a><a href="#skills">专业技能</a><a href="#contact">联系方式</a></div>
+    </nav>
+
+    <header id="home">
+        <div class="header-content">
+            <div class="profile-image" onclick="openLightbox('images/profile.jpg', '刘节琦')">
+                <img src="images/profile.jpg" alt="刘节琦照片" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'profile-placeholder\'>📷</div>'">
+            </div>
+            <div class="header-text">
+                <h1>刘节琦</h1>
+                <p class="subtitle">集成电路专业</p>
+                <p>专注于电子电路设计、PCB布局与嵌入式开发，具备扎实的专业基础和实践能力。</p>
+                <div class="contact-info">
+                    <div class="contact-item"><div class="icon">📱</div><span>19733166273</span></div>
+                    <div class="contact-item"><div class="icon">🎓</div><span>齐鲁工业大学（山东省科学院）</span></div>
+                    <div class="contact-item"><div class="icon">✉️</div><span>2091379696@qq.com</span></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="skills-section" id="skills">
+        <h2 class="section-title"><span>专业技能</span></h2>
+        <div class="skills-grid">
+            <div class="skill-card"><div class="skill-image" onclick="openLightbox('images/skill1.jpg', 'PCB原理图设计')"><img src="images/skill1.jpg" alt="PCB原理图设计" onerror="this.style.display='none'; this.parentElement.innerHTML='🔌'"></div><h3>PCB原理图设计</h3><p>具备扎实的电路理论基础，能够熟练使用嘉立创EDA等EDA软件进行PCB原理图设计，能够独立完成复杂电路的设计与调试。</p><span class="skill-tag">Altium Designer</span><span class="skill-tag">原理图</span></div>
+            <div class="skill-card"><div class="skill-image" onclick="openLightbox('images/skill2.jpg', 'PCB四层板设计')"><img src="images/skill2.jpg" alt="PCB四层板设计" onerror="this.style.display='none'; this.parentElement.innerHTML='🟦'"></div><h3>PCB四层板设计</h3><p>熟练掌握多层PCB设计流程，具备高速信号完整性分析能力，能够合理布局布线，实现阻抗控制，满足EMC要求。</p><span class="skill-tag">四层板</span><span class="skill-tag">高速设计</span></div>
+            <div class="skill-card"><div class="skill-image">📐</div><h3>PCB六层板设计</h3><p>了解六层及以上多层板的设计原则，掌握层叠结构设计、电源完整性分析等关键技术，具备参与高端电子产品研发的能力。</p><span class="skill-tag">六层板</span><span class="skill-tag">层叠设计</span></div>
+            <div class="skill-card"><div class="skill-image" onclick="openLightbox('images/skill4.jpg', '编程语言')"><img src="images/skill4.jpg" alt="编程语言" onerror="this.style.display='none'; this.parentElement.innerHTML='💻'"></div><h3>编程语言</h3><p>熟练掌握C语言、Java和Python三种主流编程语言，熟悉数据结构和算法，能够进行嵌入式开发、应用程序设计和自动化脚本编写。</p><span class="skill-tag">C Language</span><span class="skill-tag">Java</span><span class="skill-tag">Python</span></div>
+            <div class="skill-card"><div class="skill-image" onclick="openLightbox('images/skill5.jpg', '3D建模')"><img src="images/skill5.jpg" alt="3D建模" onerror="this.style.display='none'; this.parentElement.innerHTML='🎨'"></div><h3>3D建模</h3><p>具备良好的空间想象能力，熟练使用SolidWorks、AutoCAD、blender等三维建模软件，能够完成电子产品外壳、结构件等三维设计工作，兼具技术与审美。</p><span class="skill-tag">SolidWorks</span><span class="skill-tag">blender</span></div>
+            <div class="skill-card"><div class="skill-image">🤖</div><h3>AI技术应用</h3><p>熟悉国内外主流AI工具和技术，包括ChatGPT、openclaw、vibe coding、Stable Diffusion等，能够熟练运用AI提升工作效率。</p><span class="skill-tag">Openclaw</span><span class="skill-tag">GitHub成员</span></div>
+        </div>
+    </section>
+
+    <footer id="contact"><p>&copy; 2026 刘节琦个人作品集 | 齐鲁工业大学（山东省科学院）| 电话：19733166273</p></footer>
+
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-img" src="" alt="">
+        <div class="lightbox-caption" id="lightbox-caption"></div>
+    </div>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => { anchor.addEventListener('click', function (e) { e.preventDefault(); document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' }); }); });
+        
+        function createParticles() { const container = document.getElementById('particles'); for (let i = 0; i < 30; i++) { const particle = document.createElement('div'); particle.className = 'particle'; particle.style.left = Math.random() * 100 + '%'; particle.style.animationDelay = Math.random() * 15 + 's'; particle.style.animationDuration = (15 + Math.random() * 10) + 's'; const colors = ['#00d9ff', '#00ff88', '#ff6b6b', '#feca57']; particle.style.background = colors[Math.floor(Math.random() * colors.length)]; particle.style.boxShadow = `0 0 10px ${particle.style.background}`; container.appendChild(particle); } }
+        
+        function openLightbox(src, caption) { if (!src || src === 'images/') return; const lightbox = document.getElementById('lightbox'); const img = document.getElementById('lightbox-img'); const captionEl = document.getElementById('lightbox-caption'); img.src = src; captionEl.textContent = caption || ''; lightbox.classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeLightbox() { document.getElementById('lightbox').classList.remove('active'); document.body.style.overflow = ''; }
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
+        createParticles();
+    </script>
+</body>
+</html>
